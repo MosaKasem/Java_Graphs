@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestDFS",
+            "request": "launch",
+            "mainClass": "kr222if.graphs.test.TestDFS",
+            "projectName": "kr222if-assign3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GeneratorMain",
+            "request": "launch",
+            "mainClass": "kr222if.graphs.test.GeneratorMain",
+            "projectName": "kr222if-assign3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "app.App",
+            "projectName": "kr222if-assign3"
+        }
+    ]
+}
