@@ -1,5 +1,6 @@
 package kr222if.graphs.impl;
 
+import java.util.HashSet;
 import java.util.Iterator;
 
 import kr222if.graphs.Node;
@@ -9,76 +10,87 @@ import kr222if.graphs.Node;
  */
 public class MyNode<T> extends Node<T> {
 
+    private HashSet< Node < T > > successors; 
+    private HashSet< Node < T > > predecessors; 
+
     protected MyNode(T item) {
-        super(item);
-        // TODO Auto-generated constructor stub
+        super(item); // Node constructor is called
+        successors = new HashSet<Node<T>>();
+        predecessors = new HashSet<Node<T>>();
     }
 
     @Override
     public boolean hasSucc(Node<T> node) {
-        // TODO Auto-generated method stub
+        if (this.successors.contains(node)) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public int outDegree() {
-        // TODO Auto-generated method stub
-        return 0;
+        return successors.size();
     }
 
     @Override
     public Iterator<Node<T>> succsOf() {
-        // TODO Auto-generated method stub
-        return null;
+        return successors.iterator();
     }
 
     @Override
     public boolean hasPred(Node<T> node) {
-        // TODO Auto-generated method stub
+        if (this.predecessors.contains(node)) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public int inDegree() {
-        // TODO Auto-generated method stub
-        return 0;
+        return predecessors.size();
     }
 
     @Override
     public Iterator<Node<T>> predsOf() {
-        // TODO Auto-generated method stub
-        return null;
+        return predecessors.iterator();
     }
 
     @Override
     protected void addSucc(Node<T> succ) {
-        // TODO Auto-generated method stub
+        successors.add(succ);
 
     }
 
     @Override
     protected void removeSucc(Node<T> succ) {
-        // TODO Auto-generated method stub
+        successors.remove(succ);
 
     }
 
     @Override
     protected void addPred(Node<T> pred) {
-        // TODO Auto-generated method stub
+        predecessors.add(pred);
 
     }
 
     @Override
     protected void removePred(Node<T> pred) {
-        // TODO Auto-generated method stub
+        predecessors.remove(pred);
 
     }
 
     @Override
     protected void disconnect() {
-        // TODO Auto-generated method stub
-
+        Iterator predsIt = predsOf();
+        while(predsIt.hasNext()) {
+            MyNode<T> n = (MyNode<T>)predsIt.next();
+            n.removeSucc(n);
+        }
+        Iterator succIt = succsOf();
+        while (succIt.hasNext()) {
+            MyNode<T> n = (MyNode<T>)succIt.next();
+            n.removeSucc(this);
+        }
     }
-
     
 }
