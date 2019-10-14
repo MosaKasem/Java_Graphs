@@ -33,10 +33,12 @@ public class MyGraph<T> implements DirectedGraph<T> {
 
 	@Override
 	public Node<T> getNodeFor(T item) {
-		if (item == null) {
+		if (item == null || !nodes.contains(item)) {
             throw new NullPointerException("item does not contain any value!");
+        } else {
+            return nodes.get(counter);
         }
-		return null;
+
 	}
 
 	@Override
