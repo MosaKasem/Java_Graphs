@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestAlgorithms",
+            "request": "launch",
+            "mainClass": "kr222if.graphs.test.TestAlgorithms",
+            "projectName": "kr222if-assign3"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TestDFS",
             "request": "launch",
             "mainClass": "kr222if.graphs.test.TestDFS",

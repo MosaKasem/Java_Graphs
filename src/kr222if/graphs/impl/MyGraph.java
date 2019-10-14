@@ -1,22 +1,41 @@
 package kr222if.graphs.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import kr222if.graphs.DirectedGraph;
 import kr222if.graphs.Node;
 
 public class MyGraph<T> implements DirectedGraph<T> {
+    private List<Node<T>> nodes;
+    private int counter = 0;
+    public MyGraph() {
+        nodes = new ArrayList<Node<T>>();
+    }
 
 	@Override
 	public Node<T> addNodeFor(T item) {
-		// TODO Auto-generated method stub
-		return null;
+        if (item == null) {
+            throw new NullPointerException("item does not contain any value!");
+        }
+        MyNode<T> node = null;
+        if (containsNodeFor(item)) {
+            return nodes.get(counter);
+        } else {
+            node = new MyNode<T>(item);
+            nodes.add(node);
+        }
+		return node;
 	}
 
 	@Override
 	public Node<T> getNodeFor(T item) {
-		// TODO Auto-generated method stub
+		if (item == null) {
+            throw new NullPointerException("item does not contain any value!");
+        }
 		return null;
 	}
 
