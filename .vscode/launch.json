@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestDirectedGraph",
+            "request": "launch",
+            "mainClass": "kr222if.graphs.test.TestDirectedGraph",
+            "projectName": "kr222if-assign3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MyGraph",
+            "request": "launch",
+            "mainClass": "kr222if.graphs.impl.MyGraph",
+            "projectName": "kr222if-assign3"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TestAlgorithms",
             "request": "launch",
             "mainClass": "kr222if.graphs.test.TestAlgorithms",
