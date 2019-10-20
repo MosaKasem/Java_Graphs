@@ -2,9 +2,7 @@ package kr222if.graphs.impl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import kr222if.graphs.DirectedGraph;
 import kr222if.graphs.Node;
@@ -12,18 +10,24 @@ import kr222if.graphs.Node;
 public class MyGraph<T> implements DirectedGraph<T> {
     private List<Node<T>> nodes;
     private int Headcount = 0;
+    private int indexOfNode = 0;
     public MyGraph() {
         nodes = new ArrayList<Node<T>>();
+    }
+
+   public int indexOf(Node<T> node){
+       return nodes.indexOf(node);
     }
 
 	@Override
 	public Node<T> addNodeFor(T item) {
         MyNode<T> node = null;
+        
         if (item == null) {
             throw new NullPointerException("item does not contain any value!");
         }
         if (containsNodeFor(item)) {
-            return nodes.get(Headcount);
+            return getNodeFor(item);
         } else {
             node = new MyNode<T>(item);
             nodes.add(node);
@@ -37,16 +41,31 @@ public class MyGraph<T> implements DirectedGraph<T> {
 		if (item == null) {
             throw new NullPointerException("item does not contain any value!");
         }
-
-        Iterator<Node<T>> n = nodes.iterator();
-        while (n.hasNext()) {
-            Node<T> node = n.next();
-            if (node.item().equals(item)) {
-                return node;
-            }
+        if (containsNodeFor(item)) {
+            return nodes.get(indexOfNode);
+        } else {
+            throw new NullPointerException("item does not contain any value!");
         }
-        return null;
-	}
+    }
+/* 	@Override
+	public Node<T> getNodeFor(T item) {
+		if (item == null) {
+            throw new NullPointerException("item does not contain any value!");
+        }
+        if (containsNodeFor(item)) {
+            // return nodes.get(indexOf((Node<T>) (item)));
+            Iterator<Node<T>> n = nodes.iterator();
+            while (n.hasNext()) {
+                Node<T> node = n.next();
+                if (node.item().equals(item)) { // if the node exists
+                    return node; // return the node
+                }
+            }
+        } else {
+            throw new NullPointerException("gg!");
+         }
+         return null;
+    } */
 
 	@Override
 	public boolean addEdgeFor(T from, T to) {
@@ -55,11 +74,12 @@ public class MyGraph<T> implements DirectedGraph<T> {
         }
         if (containsEdgeFor(from, to)) {
             return false;
+        } else {
+            Node<T> nodePred = addNodeFor(from);
+            Node<T> nodeSucc = addNodeFor(to);
+            ((MyNode<T>) nodePred).addSucc(nodeSucc);
+            ((MyNode<T>) nodeSucc).addPred(nodePred);
         }
-        Node<T> nodePred = addNodeFor(from);
-        Node<T> nodeSucc = addNodeFor(to);
-        ((MyNode<T>) nodePred).addSucc(nodeSucc);
-        ((MyNode<T>) nodeSucc).addPred(nodePred);
 		return true;
 	}
 
@@ -69,10 +89,13 @@ public class MyGraph<T> implements DirectedGraph<T> {
             throw new NullPointerException("item does not contain any value!");
         }
         Iterator<Node<T>> n = nodes.iterator();
+        int index = 0;
         while (n.hasNext()) {
             if (n.next().item().equals(item)) {
+                indexOfNode = index;
                 return true;
             }
+            index++;
         }
 		return false;
 	}
@@ -81,14 +104,28 @@ public class MyGraph<T> implements DirectedGraph<T> {
 	public void removeNodeFor(T item) {
         Node<T> theNode = getNodeFor(item);
         if (theNode != null) {
+            ((MyNode<T>)theNode).disconnect();
             nodes.remove(theNode);
         }
+
 	}
 
 	@Override
 	public boolean containsEdgeFor(T from, T to) {
-        Node<T> nodeFrom = this.getNodeFor(from);
-        Node<T> nodeTo = this.getNodeFor(to);
+        Node<T> nodeFrom = null; 
+        Node<T> nodeTo = null;
+        int indexFrom = 0;
+        int indexTo = 0;
+        // this.getNodeFor(from);
+        // this.getNodeFor(to);
+        if (containsNodeFor(from)) {
+            nodeFrom = nodes.get(indexOfNode);
+            indexFrom = indexOfNode;
+        }
+        if (containsNodeFor(to)) {
+            nodeTo = nodes.get(indexOfNode);
+            indexTo = indexOfNode;
+        }
 		if (nodeFrom != null && nodeTo != null) {
             if (nodeFrom.hasSucc(nodeTo) && nodeTo.hasPred(nodeFrom)) {
                 return true;
@@ -144,7 +181,7 @@ public class MyGraph<T> implements DirectedGraph<T> {
             if (node.isHead()) {
                 headCount++;
             }
-            it.next();
+
         }
         return headCount;
     }
@@ -165,13 +202,12 @@ public class MyGraph<T> implements DirectedGraph<T> {
     @Override
     public int tailCount() {
         int tailCount = 0;
-        Iterator <Node<T>> it = heads();
+        Iterator <Node<T>> it = tails();
         while (it.hasNext()) {
             Node<T> node = it.next();
             if (node.isTail()) {
                 tailCount++;
             }
-            it.next();
         }
         return tailCount;
     }
@@ -208,6 +244,7 @@ public class MyGraph<T> implements DirectedGraph<T> {
         graph.addNodeFor(9);
         // graph.containsNodeFor(2);
         System.out.println(graph.getNodeFor(9999));
+        graph.getNodeFor(-1);
         System.out.println(graph.getNodeFor(1).getClass().getCanonicalName()); // magic
     }
 }

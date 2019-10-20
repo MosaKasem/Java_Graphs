@@ -15,8 +15,8 @@ public class MyNode<T> extends Node<T> {
 
     protected MyNode(T item) {
         super(item); // Node constructor is called
-        successors = new HashSet<Node<T>>();
-        predecessors = new HashSet<Node<T>>();
+        this.successors = new HashSet<Node<T>>();
+        this.predecessors = new HashSet<Node<T>>();
     }
 
     @Override
@@ -81,16 +81,35 @@ public class MyNode<T> extends Node<T> {
 
     @Override
     protected void disconnect() {
-        Iterator predsIt = predsOf();
-        while(predsIt.hasNext()) {
-            MyNode<T> n = (MyNode<T>)predsIt.next();
-            n.removeSucc(n);
+        for (Node<T> s : this.successors) {
+            MyNode<T> node = (MyNode<T>) s;
+            node.removePred(this);
         }
-        Iterator succIt = succsOf();
-        while (succIt.hasNext()) {
-            MyNode<T> n = (MyNode<T>)succIt.next();
-            n.removeSucc(this);
+        for (Node<T> p : this.predecessors) {
+            MyNode<T> node = (MyNode<T>) p;
+            node.removePred(this);
         }
+        this.successors.clear();
+        this.predecessors.clear();
+/*         Iterator<Node<T>> succsIt = succsOf();
+        while (succsIt.hasNext()) {
+            MyNode<T> node = (MyNode<T>) succsIt.next();
+            
+                node.removePred(this);
+            
+            
+                this.removeSucc(node);
+            
+        }            
+        Iterator<Node<T>> predsIt = predsOf();
+        while (predsIt.hasNext()) {
+            MyNode<T> node = (MyNode<T>) predsIt.next();
+            
+                node.removeSucc(this);
+            
+            
+                this.removePred(node);
+            
+        } */
     }
-    
 }
