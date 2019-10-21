@@ -114,17 +114,12 @@ public class MyGraph<T> implements DirectedGraph<T> {
 	public boolean containsEdgeFor(T from, T to) {
         Node<T> nodeFrom = null; 
         Node<T> nodeTo = null;
-        int indexFrom = 0;
-        int indexTo = 0;
-        // this.getNodeFor(from);
-        // this.getNodeFor(to);
+
         if (containsNodeFor(from)) {
             nodeFrom = nodes.get(indexOfNode);
-            indexFrom = indexOfNode;
         }
         if (containsNodeFor(to)) {
             nodeTo = nodes.get(indexOfNode);
-            indexTo = indexOfNode;
         }
 		if (nodeFrom != null && nodeTo != null) {
             if (nodeFrom.hasSucc(nodeTo) && nodeTo.hasPred(nodeFrom)) {

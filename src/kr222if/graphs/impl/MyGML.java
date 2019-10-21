@@ -16,36 +16,44 @@ public class MyGML<T> extends GML<T> {
 
 	@Override
     public String toGML() {
-        String gmlString = "graph [\n";
+        String gmlString = "graph [";
+        String edges = "";
         Iterator<Node<T>> graphIt = graph.iterator();
         MyGraph g=(MyGraph)graph; // in order to call indexOf
         while (graphIt.hasNext()) {
             Node<T> node=graphIt.next();
             int id = g.indexOf(node);
-            gmlString += "node [ \n";
+            gmlString += "\n\tnode [\n";
             gmlString += makeNode(id, "node " + id);
             Iterator<Node<T>>  nodesuccs=node.succsOf();
             while (nodesuccs.hasNext()) {
                 Node<T> successor=nodesuccs.next();
                 int succid = g.indexOf(successor);
-                gmlString += makeEdge(id, succid, id + "->" + succid);
+                edges += makeEdge(id, succid, id + "->" + succid);
                 // "1->2"
             }
         }
-        return null;
+        gmlString += edges;
+        gmlString += "\n]";
+        return gmlString;
     }
 
     public String makeNode(int id, String label) {
-        return "\tid " + id + "\n\t\tlabel " + label + "\t\n]";
+        return "\t\tid " + id + "\n\t\tlabel " + "\"" + label + "\"" + "\n\t]";
     } 
 
     public String makeEdge(int source, int target, String label) {
-        return "\n\tedge [\n\t\tsource " + source + "\n\t\t" + "target " + target + "\n\t\tlabel " + label;
+        return "\n\tedge [\n\t\tsource " + source + "\n\t\t" + "target " + target + "\n\t\tlabel " + "\"" + label + "\"" + "\n\t]";
     }
    public static void main(String[] args) {
        DirectedGraph<Integer> g = new MyGraph<Integer>();
        		try {
 			g.addNodeFor(1); // Add some nodes.
+			g.addNodeFor(2); // Add some nodes.
+			g.addNodeFor(3); // Add some nodes.
+            g.addNodeFor(4); // Add some nodes.
+            g.addEdgeFor(5, 6);
+            g.addEdgeFor(7, 8);
 				
 		} catch(Exception e) { e.printStackTrace(); } // Handles exception.
 		
