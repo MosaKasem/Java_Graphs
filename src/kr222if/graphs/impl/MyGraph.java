@@ -47,25 +47,6 @@ public class MyGraph<T> implements DirectedGraph<T> {
             throw new NullPointerException("item does not contain any value!");
         }
     }
-/* 	@Override
-	public Node<T> getNodeFor(T item) {
-		if (item == null) {
-            throw new NullPointerException("item does not contain any value!");
-        }
-        if (containsNodeFor(item)) {
-            // return nodes.get(indexOf((Node<T>) (item)));
-            Iterator<Node<T>> n = nodes.iterator();
-            while (n.hasNext()) {
-                Node<T> node = n.next();
-                if (node.item().equals(item)) { // if the node exists
-                    return node; // return the node
-                }
-            }
-        } else {
-            throw new NullPointerException("gg!");
-         }
-         return null;
-    } */
 
 	@Override
 	public boolean addEdgeFor(T from, T to) {
@@ -131,8 +112,14 @@ public class MyGraph<T> implements DirectedGraph<T> {
 
 	@Override
 	public boolean removeEdgeFor(T from, T to) {
-        Node<T> nodeFrom = this.getNodeFor(from);
-        Node<T> nodeTo = this.getNodeFor(to);
+        Node<T> nodeFrom = null;
+        Node<T> nodeTo = null;
+        if (containsNodeFor(from)) {
+            nodeFrom = nodes.get(indexOfNode);
+        }
+        if (containsNodeFor(to)) {
+            nodeTo = nodes.get(indexOfNode);
+        }
         if (nodeFrom != null && nodeTo != null) { 
             if (nodeFrom.hasSucc(nodeTo) && nodeTo.hasPred(nodeFrom)) {
                 ((MyNode<T>) nodeFrom).removeSucc(nodeTo);

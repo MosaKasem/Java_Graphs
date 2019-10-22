@@ -29,13 +29,13 @@ graph [
 	]
 	edge [
 		source 0
-		target 2
-		label "0->2"
+		target 1
+		label "0->1"
 	]
 	edge [
 		source 0
-		target 1
-		label "0->1"
+		target 2
+		label "0->2"
 	]
 	edge [
 		source 1
@@ -54,23 +54,23 @@ graph [
 	]
 	edge [
 		source 3
-		target 4
-		label "3->4"
-	]
-	edge [
-		source 3
 		target 1
 		label "3->1"
 	]
 	edge [
-		source 4
-		target 5
-		label "4->5"
+		source 3
+		target 4
+		label "3->4"
 	]
 	edge [
 		source 4
 		target 6
 		label "4->6"
+	]
+	edge [
+		source 4
+		target 5
+		label "4->5"
 	]
 	edge [
 		source 5

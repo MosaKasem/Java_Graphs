@@ -1,7 +1,9 @@
 package kr222if.graphs.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import kr222if.graphs.Node;
 
@@ -81,35 +83,28 @@ public class MyNode<T> extends Node<T> {
 
     @Override
     protected void disconnect() {
-        for (Node<T> s : this.successors) {
-            MyNode<T> node = (MyNode<T>) s;
-            node.removePred(this);
-        }
-        for (Node<T> p : this.predecessors) {
-            MyNode<T> node = (MyNode<T>) p;
-            node.removePred(this);
-        }
-        this.successors.clear();
-        this.predecessors.clear();
-/*         Iterator<Node<T>> succsIt = succsOf();
-        while (succsIt.hasNext()) {
-            MyNode<T> node = (MyNode<T>) succsIt.next();
-            
-                node.removePred(this);
-            
-            
-                this.removeSucc(node);
-            
-        }            
-        Iterator<Node<T>> predsIt = predsOf();
-        while (predsIt.hasNext()) {
-            MyNode<T> node = (MyNode<T>) predsIt.next();
-            
-                node.removeSucc(this);
-            
-            
-                this.removePred(node);
-            
-        } */
+            List<MyNode> predecessors = new ArrayList<>();
+            Iterator predsIt = this.predsOf();
+            while (predsIt.hasNext()) {
+                MyNode<T> pred = (MyNode<T> )predsIt.next();
+                predecessors.add(((MyNode<T>)pred));
+            }
+            for (MyNode pred : predecessors) {
+                this.removePred(pred);
+                pred.removeSucc(this);
+            }
+
+
+            List<MyNode> successors = new ArrayList<>();
+            Iterator succsIt = this.succsOf();
+            while (succsIt.hasNext()) {
+                MyNode<T> succ = (MyNode<T> )succsIt.next();
+                successors.add(((MyNode<T>)succ));
+            }
+            for (MyNode succs : successors) {
+                this.removeSucc(succs);
+                succs.removePred(this);
+            }
+        
     }
 }
