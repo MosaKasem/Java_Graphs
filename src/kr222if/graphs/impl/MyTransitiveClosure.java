@@ -14,5 +14,4 @@ public class MyTransitiveClosure<T> implements TransitiveClosure<Integer> {
         // TODO Auto-generated method stub
         return null;
     }
-
 }

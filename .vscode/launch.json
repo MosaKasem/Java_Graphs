@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MyDFS",
+            "request": "launch",
+            "mainClass": "kr222if.graphs.impl.MyDFS",
+            "projectName": "kr222if-assign3"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - MyGML",
             "request": "launch",
             "mainClass": "kr222if.graphs.impl.MyGML",
