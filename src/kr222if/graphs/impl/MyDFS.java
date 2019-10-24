@@ -35,6 +35,7 @@ public class MyDFS<T> implements DFS<T> {
 
             DFS<Integer> depthSearch = new MyDFS<Integer>();
             depthSearch.dfs(graph, graph.getNodeFor(2));
+            depthSearch.dfs(graph);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,6 +43,8 @@ public class MyDFS<T> implements DFS<T> {
 
     public List<Node<T>> dfsRecursive(Node<T> node) {
         visited.add(node); // Mark as visited
+        this.counter++;
+        node.num = counter;
         Iterator<Node<T>> succsIt = node.succsOf();
         while (succsIt.hasNext()) {
             Node<T> successor = succsIt.next();
@@ -54,14 +57,15 @@ public class MyDFS<T> implements DFS<T> {
 
     @Override
     public List<Node<T>> dfs(DirectedGraph<T> graph, Node<T> root) {
+        visited.clear();
         dfsRecursive(root);
-        // TODO Auto-generated method stub
         return visited;
     }
 
     @Override
     public List<Node<T>> dfs(DirectedGraph<T> graph) {
-        // TODO Auto-generated method stub
+        visited.clear();
+        dfsRecursive(null);
         return null;
     }
 
