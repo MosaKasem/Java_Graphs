@@ -1,2 +1,1 @@
-0(1) Constant time:
-0(N) Linear time:
+N +
