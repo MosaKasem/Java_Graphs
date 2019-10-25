@@ -48,13 +48,13 @@ public class MyBFS<T> implements BFS<T> {
         visited.clear();
         if (nodeToVisit(node)) {
             return breadthFirstSearch();
-        } else if (graph.headCount() >= 1) {
+        } else if (graph.headCount() >= 1) { //if heads exist, add heads to visit
             for (Iterator<Node<T>> headIt = graph.heads(); headIt.hasNext();) {
                 Node<T> head = headIt.next();
                 toVisit.add(head);
             }
             return breadthFirstSearch();
-        } else {
+        } else { // else, add first one from the list tovisit list
             toVisit.add(graph.getNodeFor(graph.allItems().get(0))); // get the nodes, add the first node from list
             return breadthFirstSearch();
         }

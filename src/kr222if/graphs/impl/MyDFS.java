@@ -43,9 +43,8 @@ public class MyDFS<T> implements DFS<T> {
 
     public List<Node<T>> dfsRecursive(Node<T> node) {
         visited.add(node); // Mark as visited
-        this.counter++;
-        node.num = counter;
         Iterator<Node<T>> succsIt = node.succsOf();
+        node.num = this.counter++;
         while (succsIt.hasNext()) {
             Node<T> successor = succsIt.next();
             if (!visited.contains(successor)) {
@@ -65,8 +64,14 @@ public class MyDFS<T> implements DFS<T> {
     @Override
     public List<Node<T>> dfs(DirectedGraph<T> graph) {
         visited.clear();
-        dfsRecursive(null);
-        return null;
+        Iterator<Node<T>> graphIt = graph.iterator();
+        while (graphIt.hasNext()) {
+            Node<T> node = graphIt.next();
+            if (!visited.contains(node)) {
+                dfsRecursive(node);
+            }
+        }
+        return visited;
     }
 
     @Override
