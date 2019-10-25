@@ -10,9 +10,12 @@ import kr222if.graphs.Node;
 
 public class MyDFS<T> implements DFS<T> {
     List<Node<T>> visited;
+    List<Node<T>> postOrder;
+
     int counter;
     public MyDFS() {
         visited = new ArrayList<Node<T>>();
+        postOrder = new ArrayList<Node<T>>();
         counter = 0;
     }
 
@@ -54,6 +57,23 @@ public class MyDFS<T> implements DFS<T> {
         return visited;
     }
 
+    public List<Node<T>> postOrderRecursive(Node node) {
+        Iterator<Node<T>> succsIt = node.succsOf();
+        while (succsIt.hasNext()) {
+            Node<T> successor = succsIt.next();
+            if (!visited.contains(successor)) {
+                visited.add(node);
+                postOrderRecursive(successor);
+            }
+        }
+        if (!postOrder.contains(node)) {
+            postOrder.add(node);
+            node.num = this.counter++;
+        }
+    
+        return postOrder;
+    }
+
     @Override
     public List<Node<T>> dfs(DirectedGraph<T> graph, Node<T> root) {
         visited.clear();
@@ -76,14 +96,25 @@ public class MyDFS<T> implements DFS<T> {
 
     @Override
     public List<Node<T>> postOrder(DirectedGraph<T> g, Node<T> root) {
-        // TODO Auto-generated method stub
-        return null;
+        visited.clear();
+        postOrder.clear();
+        this.counter = 0;
+        return postOrderRecursive(root);
     }
 
     @Override
     public List<Node<T>> postOrder(DirectedGraph<T> g) {
-        // TODO Auto-generated method stub
-        return null;
+        visited.clear();
+        postOrder.clear();
+        this.counter = 0;
+        Iterator<Node<T>> graphIt = g.iterator();
+        while (graphIt.hasNext()) {
+            Node<T> node = graphIt.next();
+            if (!visited.contains(node)) {
+                postOrderRecursive(node);
+            }
+        }
+        return postOrder;
     }
 
     @Override
