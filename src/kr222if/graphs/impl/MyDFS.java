@@ -61,19 +61,6 @@ public class MyDFS<T> implements DFS<T> {
             }
         }
         return false;
-/*         if (visited.contains(node)) {
-            cyclic = true;
-        }
-        visited.add(node); // Mark as visited
-        Iterator<Node<T>> succsIt = node.succsOf();
-        node.num = this.counter++;
-        while (succsIt.hasNext()) {
-            Node<T> successor = succsIt.next();
-            if (!visited.contains(successor)) {
-                dfsIsCyclic(successor);
-            }
-        } */
-        // return false;
     }
 
     public List<Node<T>> dfsRecursive(Node<T> node) {
@@ -122,7 +109,6 @@ public class MyDFS<T> implements DFS<T> {
             postOrder.add(node);
             node.num = this.counter++;
         }
-
         return postOrder;
     }
 
