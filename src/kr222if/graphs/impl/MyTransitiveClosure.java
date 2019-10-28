@@ -19,13 +19,13 @@ public class MyTransitiveClosure<T> implements TransitiveClosure<T> {
         graph = new LinkedHashMap<Node<T>, Collection<Node<T>>>();
     }
 
-    private void clousureRecursion(Node<T> node) {
+    private void dfsRecursion(Node<T> node) {
         visited.add(node);
         Iterator<Node<T>> nodeSucc = node.succsOf();
         while (nodeSucc.hasNext()) {
             Node<T> n = nodeSucc.next();
             if (!visited.contains(n)) {
-                clousureRecursion(n);
+                dfsRecursion(n);
             }
         }
     }
@@ -33,12 +33,15 @@ public class MyTransitiveClosure<T> implements TransitiveClosure<T> {
     @Override
     public Map<Node<T>, Collection<Node<T>>> computeClosure(DirectedGraph<T> dg) {
         visited.clear();
-
+        
         for (Node<T> node : dg) {
             visited = new ArrayList<Node<T>>();
-            clousureRecursion(node);
+            dfsRecursion(node);
             graph.put(node, visited);
         }
+        /* for (Map.Entry<Node<T>, Collection<Node<T>>> entry : graph.entrySet()) {
+            System.out.println("Item : " + entry.getKey() + " Count : " + entry.getValue());
+        } */ // prints out the graph or "map"
         return graph;
     }
 }
